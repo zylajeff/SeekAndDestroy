@@ -2,19 +2,18 @@ package com.zylafone.seekanddestroy;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-import com.polidea.rxandroidble.RxBleClient;
-import com.polidea.rxandroidble.RxBleDevice;
-
-import java.util.UUID;
-
-import rx.Subscription;
+import com.zylafone.seekanddestroy.services.BluetoothBleClient;
 
 public class MainActivity extends AppCompatActivity {
 
     private final int REQUEST_ENABLE_BT = 40;
+    private BluetoothBleClient mBluetoothClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +29,46 @@ public class MainActivity extends AppCompatActivity {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
-        RxBleClient rxBleClient = RxBleClient.create(this);
-        RxBleDevice device = rxBleClient.getBleDevice("DA:EF:EE:BB:10:97");
-        Subscription subscription = device.establishConnection(false)
-                .subscribe(
-                        rxBleConnection -> {
-                             rxBleConnection.writeCharacteristic(UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e".toUpperCase()), "Sendme".getBytes()).subscribe(
-                                result -> {
-                                },
-                                throwable -> {
-                             });
-                        },
-                        throwable -> {
-                            // Handle an error here.
-                        }
-                );
-        // When done, just unsubscribe.
-        //flowSubscription.unsubscribe();
+        else{
+            mBluetoothClient = new BluetoothBleClient(this);
+            mBluetoothClient.connect();
+        }
+    }
+    @Override
+    protected void onStop() {
+        mBluetoothClient.dispose();
+        super.onStop();
 
+    }
+
+    @Override
+    protected void onResume(){
+        mBluetoothClient.connect();
+        super.onResume();
+    }
+
+    public void forwardButtonClick(View v){
+        Button forwardButton = (Button)v;
+        //forwardButton.setBackgroundColor(Color.parseColor("#ffff00"));
+        mBluetoothClient.sendData("F");
+    }
+
+    public void backwardButtonClick(View v){
+        Button forwardButton = (Button)v;
+        //forwardButton.setBackgroundColor(Color.parseColor("#ffff00"));
+        mBluetoothClient.sendData("B");
+    }
+
+    public void leftButtonClick(View v){
+        Button forwardButton = (Button)v;
+        //forwardButton.setBackgroundColor(Color.parseColor("#ffff00"));
+        mBluetoothClient.sendData("L");
+    }
+
+    public void rightButtonClick(View v){
+        Button forwardButton = (Button)v;
+        //forwardButton.setBackgroundColor(Color.parseColor("#ffff00"));
+        mBluetoothClient.sendData("R");
     }
 
     @Override
@@ -56,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_ENABLE_BT) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                // The user turned on Bluetooth
+                mBluetoothClient = new BluetoothBleClient(this);
+                mBluetoothClient.connect();
             }
         }
     }
-
 }
