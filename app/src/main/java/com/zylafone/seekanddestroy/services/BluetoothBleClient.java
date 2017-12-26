@@ -49,7 +49,7 @@ public class BluetoothBleClient {
                         System.out.println("stuff");
                         String x = throwable.getLocalizedMessage();
                         x= "Overwrite";
-                        //Error writing
+                        //Error writing®
                     }
             );
 
@@ -58,6 +58,7 @@ public class BluetoothBleClient {
     }
 
     public void dispose(){
+        //TODO: Probably shouldnt pile up all of these subscriptions.  Seems like this will keep growing and growing.
         mOpenSubscriptions.forEach(s -> s.unsubscribe());
     }
 }

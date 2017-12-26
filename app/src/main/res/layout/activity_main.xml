@@ -10,10 +10,12 @@
         android:id="@+id/forwardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="243dp"
         android:layout_marginTop="50dp"
         android:onClick="forwardButtonClick"
         android:text="Forward"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintStart_toEndOf="@+id/leftButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,5 +52,44 @@
         android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/leftButton"
         app:layout_constraintTop_toBottomOf="@+id/leftButton" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="fireButtonClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forwardButton"
+        app:srcCompat="@drawable/icons8_poison_50" />
+
+    <TextView
+        android:id="@+id/confirmation_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Body2"
+        android:textColor="?android:attr/colorAccent"
+        android:text="@string/purchase_done"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/encrypted_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Body2"
+        android:textColor="?android:attr/colorAccent"
+        android:text="@string/purchase_done"
+        android:visibility="gone"/>
 
 </android.support.constraint.ConstraintLayout>
