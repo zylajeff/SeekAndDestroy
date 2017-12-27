@@ -17,8 +17,6 @@ package com.zylafone.seekanddestroy;
 package com.example.android.fingerprintdialog;
  */
 
-
-
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.CancellationSignal;
 import android.widget.ImageView;
@@ -43,8 +41,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     /**
      * Constructor for {@link FingerprintUiHelper}.
      */
-    FingerprintUiHelper(FingerprintManager fingerprintManager,
-                        ImageView icon, TextView errorTextView, Callback callback) {
+    FingerprintUiHelper(FingerprintManager fingerprintManager, ImageView icon, TextView errorTextView, Callback callback) {
         mFingerprintManager = fingerprintManager;
         mIcon = icon;
         mErrorTextView = errorTextView;
@@ -122,8 +119,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     private void showError(CharSequence error) {
         mIcon.setImageResource(R.drawable.ic_fingerprint_error);
         mErrorTextView.setText(error);
-        mErrorTextView.setTextColor(
-                mErrorTextView.getResources().getColor(R.color.warning_color, null));
+        mErrorTextView.setTextColor(mErrorTextView.getResources().getColor(R.color.warning_color, null));
         mErrorTextView.removeCallbacks(mResetErrorTextRunnable);
         mErrorTextView.postDelayed(mResetErrorTextRunnable, ERROR_TIMEOUT_MILLIS);
     }
@@ -133,8 +129,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
         public void run() {
             mErrorTextView.setTextColor(
                     mErrorTextView.getResources().getColor(R.color.hint_color, null));
-            mErrorTextView.setText(
-                    mErrorTextView.getResources().getString(R.string.fingerprint_hint));
+            mErrorTextView.setText(mErrorTextView.getResources().getString(R.string.fingerprint_hint));
             mIcon.setImageResource(R.drawable.ic_fp_40px);
         }
     };

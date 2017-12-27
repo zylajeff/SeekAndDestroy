@@ -1,11 +1,13 @@
 package com.zylafone.seekanddestroy.services;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.widget.ImageView;
 
 import com.polidea.rxandroidble.RxBleClient;
 import com.polidea.rxandroidble.RxBleConnection;
 import com.polidea.rxandroidble.RxBleDevice;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,10 +26,14 @@ public class BluetoothBleClient {
         mBleDevice = rxBleClient.getBleDevice(REMOTE_BLUETOOTH_ADDRESS);
     }
 
-    public void connect(){
+    public void connect(ImageView view){
+        //TODO: Eventually decouple this from the view.
+
         Subscription subscription = mBleDevice.establishConnection(false).subscribe(
                 rxBleConnection -> {
                     mBleConnectedDevice = rxBleConnection;
+                    GradientDrawable backgroundGradient = (GradientDrawable)view.getBackground();
+                    backgroundGradient.setColor(Color.GREEN);
                 },
                 throwable -> {
                     //There was an error

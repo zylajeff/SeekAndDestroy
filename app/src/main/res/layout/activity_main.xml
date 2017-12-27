@@ -4,92 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zylafone.seekanddestroy.MainActivity">
+    tools:context="com.zylafone.seekanddestroy.MainActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/forwardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="243dp"
-        android:layout_marginTop="50dp"
-        android:onClick="forwardButtonClick"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="60dp"
+        android:onClick="directionalButtonClick"
         android:text="Forward"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
-        app:layout_constraintStart_toEndOf="@+id/leftButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/backwardButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/leftButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="1dp"
-        android:onClick="leftButtonClick"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="160dp"
+        android:onClick="directionalButtonClick"
         android:text="Left"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/rightButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forwardButton" />
+        app:layout_constraintEnd_toStartOf="@+id/forwardButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/rightButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="rightButtonClick"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="160dp"
+        android:onClick="directionalButtonClick"
         android:text="Right"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/leftButton"
-        app:layout_constraintTop_toBottomOf="@+id/forwardButton" />
+        app:layout_constraintStart_toEndOf="@+id/forwardButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/backwardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="backwardButtonClick"
-        android:text="Button"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="220dp"
+        android:onClick="directionalButtonClick"
+        android:text="Backward"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/leftButton"
-        app:layout_constraintTop_toBottomOf="@+id/leftButton" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:backgroundTint="@android:color/holo_red_dark"
+        android:layout_height="140dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/holo_red_dark"
         android:onClick="fireButtonClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forwardButton"
+        app:layout_constraintTop_toBottomOf="@+id/backwardButton"
         app:srcCompat="@drawable/icons8_poison_50" />
 
-    <TextView
-        android:id="@+id/confirmation_message"
+    <ImageView
+        android:id="@+id/bluetoothConnectionIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Body2"
-        android:textColor="?android:attr/colorAccent"
-        android:text="@string/purchase_done"
-        android:visibility="gone"/>
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/connection_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/encrypted_message"
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Body2"
-        android:textColor="?android:attr/colorAccent"
-        android:text="@string/purchase_done"
-        android:visibility="gone"/>
+        android:layout_marginBottom="159dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/leftButton"
+        app:layout_constraintGuide_end="323dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>
