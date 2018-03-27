@@ -44,6 +44,10 @@ public class BluetoothBleClient {
 
     }
 
+    public boolean isConnected() {
+        return mBleConnectedDevice != null;
+    }
+
     public void sendData(String payload){
         if(mBleConnectedDevice != null) {
             Subscription subscription = mBleConnectedDevice.writeCharacteristic(CHARACTERISTIC_TX_UUID, payload.getBytes()).subscribe(

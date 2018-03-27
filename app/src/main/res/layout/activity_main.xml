@@ -9,66 +9,62 @@
 
     <Button
         android:id="@+id/forwardButton"
-        android:layout_width="120dp"
+        android:layout_width="128dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="62dp"
         android:onClick="directionalButtonClick"
         android:text="Forward"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/backwardButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/stopButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/leftButton"
-        android:layout_width="120dp"
+        android:layout_width="128dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginStart="8dp"
         android:onClick="directionalButtonClick"
         android:text="Left"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/forwardButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/stopButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/stopButton" />
 
     <Button
         android:id="@+id/rightButton"
-        android:layout_width="120dp"
+        android:layout_width="128dp"
         android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginEnd="8dp"
         android:onClick="directionalButtonClick"
         android:text="Right"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/forwardButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/stopButton"
+        app:layout_constraintTop_toTopOf="@+id/stopButton" />
 
     <Button
         android:id="@+id/backwardButton"
-        android:layout_width="120dp"
+        android:layout_width="128dp"
         android:layout_height="60dp"
-        android:layout_marginTop="220dp"
         android:onClick="directionalButtonClick"
         android:text="Backward"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/stopButton"
+        app:layout_constraintStart_toStartOf="@+id/stopButton"
+        app:layout_constraintTop_toBottomOf="@+id/stopButton" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="141dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="17dp"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="40dp"
         android:background="@android:color/holo_red_dark"
         android:onClick="fireButtonClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backwardButton"
         app:srcCompat="@drawable/icons8_poison_50" />
 
     <ImageView
@@ -85,11 +81,8 @@
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="159dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/leftButton"
-        app:layout_constraintGuide_end="323dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintGuide_end="322dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
@@ -97,5 +90,68 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="128dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="directionalButtonClick"
+        android:text="STOP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forwardButton" />
+
+    <TextView
+        android:id="@+id/speedLabel"
+        android:layout_width="61dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="30dp"
+        android:text="Speed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/speedTextView"
+        tools:text="Speed" />
+
+    <TextView
+        android:id="@+id/speedTextView"
+        android:layout_width="35dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="272dp"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/speedControlBar"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="32dp"
+        android:max="255"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/speedTextView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="364dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="491dp" />
 
 </android.support.constraint.ConstraintLayout>

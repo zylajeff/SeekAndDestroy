@@ -17,9 +17,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zylafone.seekanddestroy.services.BluetoothBleClient;
+import com.zylafone.seekanddestroy.services.BluetoothController;
+import com.zylafone.seekanddestroy.services.Controller;
+import com.zylafone.seekanddestroy.services.Direction;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -47,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private KeyStore mKeyStore;
     private KeyGenerator mKeyGenerator;
     private Cipher defaultCipher;
-    private Cipher cipherNotInvalidated;
 
     private ImageView mBluetoothConnectionIndicator;
 
     private final int REQUEST_ENABLE_BT = 40;
     private BluetoothBleClient mBluetoothClient;
-
+    private Controller mController;
+    private int mCurrentSpeed = 128;
     private Button mPreviousButton;
 
     //region Activity Lifecycle
@@ -61,6 +66,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SeekBar sbSpeed = (SeekBar) findViewById(R.id.speedControlBar);
+        TextView speedDisplay = (TextView)findViewById(R.id.speedTextView);
+        speedDisplay.setText(String.valueOf(mCurrentSpeed));
+        sbSpeed.setProgress(mCurrentSpeed);
+        sbSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                speedDisplay.setText(String.valueOf(progress));
+                mCurrentSpeed = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+
+        });
 
         bootstrapBluetooth();
         bootstrapFingerprintScanning();
@@ -84,16 +110,19 @@ public class MainActivity extends AppCompatActivity {
     public void directionalButtonClick(View v){
         switch(v.getId()){
             case  R.id.leftButton :
-                mBluetoothClient.sendData("LEFT");
+                mController.move(Direction.Left, mCurrentSpeed);
                 break;
             case  R.id.rightButton :
-                mBluetoothClient.sendData("RIGHT");
+                mController.move(Direction.Right, mCurrentSpeed);
                 break;
             case  R.id.forwardButton :
-                mBluetoothClient.sendData("FORWARD");
+                mController.move(Direction.Forward, mCurrentSpeed);
                 break;
             case  R.id.backwardButton :
-                mBluetoothClient.sendData("BACK");
+                mController.move(Direction.Backward, mCurrentSpeed);
+                break;
+            case  R.id.stopButton :
+                mController.move(Direction.Forward, 0);
                 break;
             default :
                 //Should never reach this.
@@ -103,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
         manageDirectionalButtonColors(mPreviousButton, (Button)v);
     }
-    public void manageDirectionalButtonColors(Button previousSelection, Button currentSelection) {
+
+    private void manageDirectionalButtonColors(Button previousSelection, Button currentSelection) {
         if(previousSelection !=null)
         {
             previousSelection.setBackgroundResource(android.R.drawable.btn_default);
@@ -214,8 +244,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } catch (KeyPermanentlyInvalidatedException e) {
             return false;
-        } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
-                | NoSuchAlgorithmException | InvalidKeyException e) {
+        } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException | NoSuchAlgorithmException | InvalidKeyException e) {
             throw new RuntimeException("Failed to init Cipher", e);
         }
     }
@@ -234,6 +263,9 @@ public class MainActivity extends AppCompatActivity {
         else{
             mBluetoothClient = new BluetoothBleClient(this);
             mBluetoothClient.connect(mBluetoothConnectionIndicator);
+
+            //while(!mBluetoothClient.isConnected()){}
+            mController = new BluetoothController(mBluetoothClient);
         }
     }
     private void bootstrapFingerprintScanning(){
@@ -255,14 +287,10 @@ public class MainActivity extends AppCompatActivity {
             defaultCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
                     + KeyProperties.BLOCK_MODE_CBC + "/"
                     + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-            cipherNotInvalidated = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
-                    + KeyProperties.BLOCK_MODE_CBC + "/"
-                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new RuntimeException("Failed to get an instance of Cipher", e);
         }
 
         createKey(DEFAULT_KEY_NAME, true);
-
     }
 }
